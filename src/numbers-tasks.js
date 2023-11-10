@@ -259,8 +259,15 @@ function getCube(num) {
  *   3  => 2
  *   10 => 55
  */
-function getFibonacciNumber(/* index */) {
-  throw new Error('Not implemented');
+function getFibonacciNumber(index) {
+  let next = 1;
+  let prev = 0;
+  for (let i = 0; i < index; i += 1) {
+    const currunt = next;
+    next += prev;
+    prev = currunt;
+  }
+  return prev;
 }
 
 /**
@@ -387,8 +394,11 @@ function toFixed(number, fractionDigits) {
  * 12345, 7    => '12345.00'
  * 12.345, 4   => '12.35'
  */
-function toPrecision(/* number, precision */) {
-  throw new Error('Not implemented');
+
+function toPrecision(number, precision) {
+  const quanter = String(number.toFixed(precision)).length;
+  const strNum = String(number.toFixed(quanter - precision - 1));
+  return strNum.slice(0, precision + 1);
 }
 
 /**
@@ -401,8 +411,8 @@ function toPrecision(/* number, precision */) {
  * new Number(5) => 5
  * Number(-5)    => -5
  */
-function getNumberValue(/* number */) {
-  throw new Error('Not implemented');
+function getNumberValue(number) {
+  return number.valueOf();
 }
 
 /**
@@ -420,8 +430,8 @@ function getNumberValue(/* number */) {
  * 5        => true
  * '5'      => false
  */
-function isNumber(/* number */) {
-  throw new Error('Not implemented');
+function isNumber(number) {
+  return Number.isFinite(number);
 }
 
 /**
@@ -435,8 +445,8 @@ function isNumber(/* number */) {
  * 5.1  => false
  * '5'  => false
  */
-function isInteger(/* number */) {
-  throw new Error('Not implemented');
+function isInteger(number) {
+  return Number.isInteger(number);
 }
 
 /**
@@ -449,8 +459,10 @@ function isInteger(/* number */) {
  * '4.567abcdefgh' => 4.567
  * 'abcdefgh'      => NaN
  */
-function getFloatOnString(/* str */) {
-  throw new Error('Not implemented');
+function getFloatOnString(str) {
+  const arrNums = str.replaceAll(/[a-z]/g, ' ').split(' ');
+  const arrInteger = arrNums.filter((item) => !Number.isInteger(Number(item)));
+  return arrInteger.length === 0 ? NaN : arrInteger[0];
 }
 
 /**
